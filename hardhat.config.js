@@ -1,14 +1,18 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-ganache");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
-
   for (const account of accounts) {
     console.log(account.address);
   }
 });
+
+const ALCHEMY_API_KEY = "g5sdCYmrmuEMRjRT8gdB0-v18uzQ9JCn";
+const ROPSTEN_PRIVATE_KEY =
+  "d070410d4a85d7c074871b12b074f007007e854a5994ee0594bcd9aa2ea946ed";
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -19,12 +23,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
-    hardhat: {},
-    development: {
-      url: "http://127.0.0.1:8545",
-    },
-    quorum: {
-      url: "http://127.0.0.1:22000",
+    // hardhat: {},
+    // development: {
+    //   url: "http://127.0.0.1:8545",
+    // },
+    // quorum: {
+    //   url: "http://127.0.0.1:22000",
+    // },
+    ropsten: {
+      url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
+      accounts: [`${ROPSTEN_PRIVATE_KEY}`],
     },
   },
   solidity: {
